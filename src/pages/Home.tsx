@@ -1,37 +1,24 @@
-import { Layout, Menu } from "antd";
-import theme from "../style/theme";
+import { Layout, Avatar, Space, Typography } from 'antd';
+import theme from '../style/theme';
+import { UserOutlined } from '@ant-design/icons';
 
-const { Header, Content, Footer } = Layout;
+import Board from './components/Board';
+
+const { Header, Content } = Layout;
+const { Text } = Typography;
 
 const Home = () => {
   return (
     <Layout className="layout">
       <Header>
-        <div className="logo" />
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={["2"]}
-          items={new Array(5).fill(null).map((_, index) => {
-            const key = index + 1;
-            return {
-              key,
-              label: `nav ${key}`,
-            };
-          })}
-        />
+        <Space wrap>
+          <Avatar icon={<UserOutlined />} />
+          <Text style={{ color: theme.color.white }}>@soyoon</Text>
+        </Space>
       </Header>
-      <Content style={{ padding: "50px 50px" }}>
-        <div
-          className="site-layout-content"
-          style={{ background: theme.color.content }}
-        >
-          Content
-        </div>
+      <Content>
+        <Board />
       </Content>
-      <Footer style={{ textAlign: "center" }}>
-        Ant Design ©2023 Created by Ant UED
-      </Footer>
     </Layout>
   );
 };
