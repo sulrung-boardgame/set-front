@@ -1,8 +1,11 @@
-import { Card, Row } from 'antd';
-import theme from '../../style/theme';
-
-import { styled } from '@stitches/react';
 import { useEffect, useState } from 'react';
+import { Row } from 'antd';
+import { styled } from '@stitches/react';
+
+import theme from '../../style/theme';
+import { ICard } from '../../types/board.type';
+
+import BoardItem from './BoardItem';
 
 const BoardRow = styled(Row, {
   gap: '0.25rem',
@@ -10,16 +13,30 @@ const BoardRow = styled(Row, {
   marginBottom: '0.25rem',
 });
 
-const BoardCard = styled(Card, {
-  maxWidth: '33%',
-  height: '100%',
-  flex: '1',
-});
-
-type SelectedList = string[];
-
 const Board = () => {
-  const [selectedList, setSelectedList] = useState<SelectedList>([]);
+  const [selectedList, setSelectedList] = useState<ICard[]>([]);
+  const [dummy] = useState<ICard[][]>([
+    [
+      { id: 0, color: 'red', count: 2, shape: 'penguins' },
+      { id: 0, color: 'blue', count: 2, shape: 'panda' },
+      { id: 0, color: 'green', count: 1, shape: 'penguins' },
+    ],
+    [
+      { id: 0, color: 'red', count: 1, shape: 'pig' },
+      { id: 0, color: 'green', count: 2, shape: 'unicon' },
+      { id: 0, color: 'green', count: 1, shape: 'unicon' },
+    ],
+    [
+      { id: 0, color: 'blue', count: 1, shape: 'butterfly' },
+      { id: 0, color: 'red', count: 2, shape: 'pig' },
+      { id: 0, color: 'blue', count: 2, shape: 'panda' },
+    ],
+    [
+      { id: 0, color: 'green', count: 3, shape: 'penguins' },
+      { id: 0, color: 'blue', count: 1, shape: 'panda' },
+      { id: 0, color: 'green', count: 2, shape: 'butterfly' },
+    ],
+  ]);
 
   const onClickCard = (event: React.MouseEvent<HTMLDivElement>) => {
     const target = event.target as HTMLDivElement;
@@ -27,7 +44,6 @@ const Board = () => {
       if (list.includes(target.innerText)) {
         return list.filter((item) => item !== target.textContent);
       }
-
       const textContent = target.innerText.trim();
       if (textContent) {
         return [...list, textContent];
@@ -51,7 +67,14 @@ const Board = () => {
       }}
       onClick={onClickCard}
     >
-      <BoardRow>
+      {dummy.map((row) => (
+        <BoardRow>
+          {row.map((col) => (
+            <BoardItem data={col} />
+          ))}
+        </BoardRow>
+      ))}
+      {/* <BoardRow>
         <BoardCard bordered={false}>🐧🐧</BoardCard>
         <BoardCard bordered={false}>🐼🐼🐼</BoardCard>
         <BoardCard bordered={false}>🐧</BoardCard>
@@ -70,7 +93,7 @@ const Board = () => {
         <BoardCard bordered={false}>🐧🐧🐧</BoardCard>
         <BoardCard bordered={false}>🐼</BoardCard>
         <BoardCard bordered={false}>🦋🦋</BoardCard>
-      </BoardRow>
+      </BoardRow> */}
     </div>
   );
 };
