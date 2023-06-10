@@ -16,7 +16,6 @@ import gof3 from './gof3.svg';
 import gos1 from './gos1.svg';
 import gos2 from './gos2.svg';
 import gos3 from './gos3.svg';
-import grf3 from './grf3.svg';
 import gze1 from './gze1.svg';
 import gze2 from './gze2.svg';
 import gze3 from './gze3.svg';
@@ -31,6 +30,7 @@ import pde2 from './pde2.svg';
 import pde3 from './pde3.svg';
 import pdf1 from './pdf1.svg';
 import pdf2 from './pdf2.svg';
+import pdf3 from './pdf3.svg';
 import pds1 from './pds1.svg';
 import pds2 from './pds2.svg';
 import pds3 from './pds3.svg';
@@ -43,7 +43,6 @@ import pof3 from './pof3.svg';
 import pos1 from './pos1.svg';
 import pos2 from './pos2.svg';
 import pos3 from './pos3.svg';
-import prf3 from './prf3.svg';
 import pze1 from './pze1.svg';
 import pze2 from './pze2.svg';
 import pze3 from './pze3.svg';
@@ -58,6 +57,7 @@ import rde2 from './rde2.svg';
 import rde3 from './rde3.svg';
 import rdf1 from './rdf1.svg';
 import rdf2 from './rdf2.svg';
+import rdf3 from './rdf3.svg';
 import rds1 from './rds1.svg';
 import rds2 from './rds2.svg';
 import rds3 from './rds3.svg';
@@ -119,8 +119,6 @@ export const iconPath = (type: string) => {
       return gos2;
     case 'gos3':
       return gos3;
-    case 'grf3':
-      return grf3;
     case 'gze1':
       return gze1;
     case 'gze2':
@@ -149,6 +147,8 @@ export const iconPath = (type: string) => {
       return pdf1;
     case 'pdf2':
       return pdf2;
+    case 'pdf3':
+      return pdf3;
     case 'pds1':
       return pds1;
     case 'pds2':
@@ -173,8 +173,6 @@ export const iconPath = (type: string) => {
       return pos2;
     case 'pos3':
       return pos3;
-    case 'prf3':
-      return prf3;
     case 'pze1':
       return pze1;
     case 'pze2':
@@ -203,6 +201,8 @@ export const iconPath = (type: string) => {
       return rdf1;
     case 'rdf2':
       return rdf2;
+    case 'rdf3':
+      return rdf3;
     case 'rds1':
       return rds1;
     case 'rds2':
