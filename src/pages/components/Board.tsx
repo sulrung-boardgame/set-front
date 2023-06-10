@@ -3,38 +3,118 @@ import { Row } from 'antd';
 import { styled } from '@stitches/react';
 
 import theme from '../../style/theme';
-import { ICard } from '../../types/board.type';
+import { EnColor, EnPattern, EnShape, ICard } from '../../types/board.type';
 
-import BoardItem from './BoardItem';
+import Card from './Card';
+
+const Container = styled('div', {
+  background: theme.color.content,
+  padding: '1rem',
+  gap: '0.25rem',
+  height: '100%',
+  minHeight: '1100px',
+});
 
 const BoardRow = styled(Row, {
   gap: '0.25rem',
-  height: 'calc(25% - 0.25rem)',
-  marginBottom: '0.25rem',
+  // height: 'calc(25% - 0.25rem)',
+  // marginBottom: '0.25rem',
 });
 
 const Board = () => {
   const [selectedList, setSelectedList] = useState<ICard[]>([]);
   const [dummy] = useState<ICard[][]>([
     [
-      { id: 0, color: 'red', count: 2, shape: 'penguins' },
-      { id: 0, color: 'blue', count: 2, shape: 'panda' },
-      { id: 0, color: 'green', count: 1, shape: 'penguins' },
+      {
+        id: 0,
+        color: EnColor.Red,
+        shape: EnShape.Diamond,
+        pattern: EnPattern.Empty,
+        count: 2,
+      },
+      {
+        id: 1,
+        color: EnColor.Purple,
+        shape: EnShape.Oval,
+        pattern: EnPattern.Stripted,
+        count: 2,
+      },
+      {
+        id: 2,
+        color: EnColor.Green,
+        shape: EnShape.Zigzag,
+        pattern: EnPattern.Filled,
+        count: 1,
+      },
     ],
     [
-      { id: 0, color: 'red', count: 1, shape: 'pig' },
-      { id: 0, color: 'green', count: 2, shape: 'unicon' },
-      { id: 0, color: 'green', count: 1, shape: 'unicon' },
+      {
+        id: 3,
+        color: EnColor.Red,
+        shape: EnShape.Zigzag,
+        pattern: EnPattern.Stripted,
+        count: 1,
+      },
+      {
+        id: 4,
+        color: EnColor.Green,
+        shape: EnShape.Oval,
+        pattern: EnPattern.Stripted,
+        count: 2,
+      },
+      {
+        id: 5,
+        color: EnColor.Green,
+        shape: EnShape.Diamond,
+        pattern: EnPattern.Empty,
+        count: 1,
+      },
     ],
     [
-      { id: 0, color: 'blue', count: 1, shape: 'butterfly' },
-      { id: 0, color: 'red', count: 2, shape: 'pig' },
-      { id: 0, color: 'blue', count: 2, shape: 'panda' },
+      {
+        id: 6,
+        color: EnColor.Purple,
+        shape: EnShape.Diamond,
+        pattern: EnPattern.Filled,
+        count: 1,
+      },
+      {
+        id: 7,
+        color: EnColor.Red,
+        shape: EnShape.Oval,
+        pattern: EnPattern.Filled,
+        count: 2,
+      },
+      {
+        id: 8,
+        color: EnColor.Purple,
+        shape: EnShape.Oval,
+        pattern: EnPattern.Empty,
+        count: 2,
+      },
     ],
     [
-      { id: 0, color: 'green', count: 3, shape: 'penguins' },
-      { id: 0, color: 'blue', count: 1, shape: 'panda' },
-      { id: 0, color: 'green', count: 2, shape: 'butterfly' },
+      {
+        id: 9,
+        color: EnColor.Green,
+        shape: EnShape.Zigzag,
+        pattern: EnPattern.Stripted,
+        count: 3,
+      },
+      {
+        id: 10,
+        color: EnColor.Purple,
+        shape: EnShape.Zigzag,
+        pattern: EnPattern.Empty,
+        count: 1,
+      },
+      {
+        id: 11,
+        color: EnColor.Green,
+        shape: EnShape.Diamond,
+        pattern: EnPattern.Filled,
+        count: 2,
+      },
     ],
   ]);
 
@@ -57,44 +137,15 @@ const Board = () => {
   }, [selectedList]);
 
   return (
-    <div
-      className="board-container"
-      style={{
-        background: theme.color.content,
-        padding: '1rem',
-        gap: '0.25rem',
-        height: '100%',
-      }}
-      onClick={onClickCard}
-    >
+    <Container className="board-container" onClick={onClickCard}>
       {dummy.map((row) => (
         <BoardRow>
           {row.map((col) => (
-            <BoardItem data={col} />
+            <Card data={col} />
           ))}
         </BoardRow>
       ))}
-      {/* <BoardRow>
-        <BoardCard bordered={false}>🐧🐧</BoardCard>
-        <BoardCard bordered={false}>🐼🐼🐼</BoardCard>
-        <BoardCard bordered={false}>🐧</BoardCard>
-      </BoardRow>
-      <BoardRow>
-        <BoardCard bordered={false}>🐷</BoardCard>
-        <BoardCard bordered={false}>🦄🦄</BoardCard>
-        <BoardCard bordered={false}>🦄</BoardCard>
-      </BoardRow>
-      <BoardRow>
-        <BoardCard bordered={false}>🦋</BoardCard>
-        <BoardCard bordered={false}>🐷🐷</BoardCard>
-        <BoardCard bordered={false}>🐼🐼</BoardCard>
-      </BoardRow>
-      <BoardRow>
-        <BoardCard bordered={false}>🐧🐧🐧</BoardCard>
-        <BoardCard bordered={false}>🐼</BoardCard>
-        <BoardCard bordered={false}>🦋🦋</BoardCard>
-      </BoardRow> */}
-    </div>
+    </Container>
   );
 };
 
