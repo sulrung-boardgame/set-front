@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Row } from 'antd';
 import { styled } from '@stitches/react';
+import { chunk } from 'lodash';
 
 import theme from '../../style/theme';
 import { EnColor, EnPattern, EnShape, ICard } from '../../types/board.type';
@@ -23,99 +24,92 @@ const BoardRow = styled(Row, {
 
 const Board = () => {
   const [selectedList, setSelectedList] = useState<ICard[]>([]);
-  const [dummy] = useState<ICard[][]>([
-    [
-      {
-        id: 0,
-        color: EnColor.Red,
-        shape: EnShape.Diamond,
-        pattern: EnPattern.Empty,
-        count: 2,
-      },
-      {
-        id: 1,
-        color: EnColor.Purple,
-        shape: EnShape.Oval,
-        pattern: EnPattern.Stripted,
-        count: 2,
-      },
-      {
-        id: 2,
-        color: EnColor.Green,
-        shape: EnShape.Zigzag,
-        pattern: EnPattern.Filled,
-        count: 1,
-      },
-    ],
-    [
-      {
-        id: 3,
-        color: EnColor.Red,
-        shape: EnShape.Zigzag,
-        pattern: EnPattern.Stripted,
-        count: 1,
-      },
-      {
-        id: 4,
-        color: EnColor.Green,
-        shape: EnShape.Oval,
-        pattern: EnPattern.Stripted,
-        count: 2,
-      },
-      {
-        id: 5,
-        color: EnColor.Green,
-        shape: EnShape.Diamond,
-        pattern: EnPattern.Empty,
-        count: 1,
-      },
-    ],
-    [
-      {
-        id: 6,
-        color: EnColor.Purple,
-        shape: EnShape.Diamond,
-        pattern: EnPattern.Filled,
-        count: 1,
-      },
-      {
-        id: 7,
-        color: EnColor.Red,
-        shape: EnShape.Oval,
-        pattern: EnPattern.Filled,
-        count: 2,
-      },
-      {
-        id: 8,
-        color: EnColor.Purple,
-        shape: EnShape.Oval,
-        pattern: EnPattern.Empty,
-        count: 2,
-      },
-    ],
-    [
-      {
-        id: 9,
-        color: EnColor.Green,
-        shape: EnShape.Zigzag,
-        pattern: EnPattern.Stripted,
-        count: 3,
-      },
-      {
-        id: 10,
-        color: EnColor.Purple,
-        shape: EnShape.Zigzag,
-        pattern: EnPattern.Empty,
-        count: 1,
-      },
-      {
-        id: 11,
-        color: EnColor.Green,
-        shape: EnShape.Diamond,
-        pattern: EnPattern.Filled,
-        count: 2,
-      },
-    ],
+  const [dummy] = useState<ICard[]>([
+    {
+      id: 0,
+      color: EnColor.Red,
+      shape: EnShape.Diamond,
+      pattern: EnPattern.Empty,
+      count: 2,
+    },
+    {
+      id: 1,
+      color: EnColor.Purple,
+      shape: EnShape.Oval,
+      pattern: EnPattern.Stripted,
+      count: 2,
+    },
+    {
+      id: 2,
+      color: EnColor.Green,
+      shape: EnShape.Zigzag,
+      pattern: EnPattern.Filled,
+      count: 1,
+    },
+
+    {
+      id: 3,
+      color: EnColor.Red,
+      shape: EnShape.Zigzag,
+      pattern: EnPattern.Stripted,
+      count: 1,
+    },
+    {
+      id: 4,
+      color: EnColor.Green,
+      shape: EnShape.Oval,
+      pattern: EnPattern.Stripted,
+      count: 2,
+    },
+    {
+      id: 5,
+      color: EnColor.Green,
+      shape: EnShape.Diamond,
+      pattern: EnPattern.Empty,
+      count: 1,
+    },
+    {
+      id: 6,
+      color: EnColor.Purple,
+      shape: EnShape.Diamond,
+      pattern: EnPattern.Filled,
+      count: 1,
+    },
+    {
+      id: 7,
+      color: EnColor.Red,
+      shape: EnShape.Oval,
+      pattern: EnPattern.Filled,
+      count: 2,
+    },
+    {
+      id: 8,
+      color: EnColor.Purple,
+      shape: EnShape.Oval,
+      pattern: EnPattern.Empty,
+      count: 2,
+    },
+    {
+      id: 9,
+      color: EnColor.Green,
+      shape: EnShape.Zigzag,
+      pattern: EnPattern.Stripted,
+      count: 3,
+    },
+    {
+      id: 10,
+      color: EnColor.Purple,
+      shape: EnShape.Zigzag,
+      pattern: EnPattern.Empty,
+      count: 1,
+    },
+    {
+      id: 11,
+      color: EnColor.Green,
+      shape: EnShape.Diamond,
+      pattern: EnPattern.Filled,
+      count: 2,
+    },
   ]);
 
   const onClickCard = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -138,10 +132,10 @@ const Board = () => {
 
   return (
     <Container className="board-container" onClick={onClickCard}>
-      {dummy.map((row) => (
+      {chunk(dummy, 3).map((row: ICard[]) => (
         <BoardRow>
-          {row.map((col) => (
-            <Card data={col} />
+          {row.map((item) => (
+            <Card data={item} key={item.id} />
           ))}
         </BoardRow>
       ))}

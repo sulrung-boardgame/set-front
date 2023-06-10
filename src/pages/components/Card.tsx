@@ -16,7 +16,7 @@ interface IProps {
 
 const Card = ({ data }: IProps) => {
   return (
-    <BoardCard bordered={false}>
+    <BoardCard>
       <img
         src={iconPath(data.color + data.shape + data.pattern + data.count)}
       />
