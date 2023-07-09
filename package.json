@@ -1,7 +1,7 @@
 {
   "name": "set-front",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite --port 8080",
@@ -19,6 +19,7 @@
     "socket.io-client": "^4.6.1"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.195",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@typescript-eslint/eslint-plugin": "^5.59.7",
