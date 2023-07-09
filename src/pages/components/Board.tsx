@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Row } from 'antd';
 import { styled } from '@stitches/react';
-import { chunk } from 'lodash';
+import chunk from 'lodash/chunk';
 
 import theme from '../../style/theme';
 import { EnColor, EnPattern, EnShape, ICard } from '../../types/board.type';
 
 import Card from './Card';
+import { isSelectedCard } from '../../common/utils';
 
 const Container = styled('div', {
   background: theme.color.content,
@@ -24,6 +25,7 @@ const BoardRow = styled(Row, {
 
 const Board = () => {
   const [selectedList, setSelectedList] = useState<ICard[]>([]);
+  const [selectedCards, setSelectedCards] = useState<ICard[]>([]); // todo: store 에서 관리
   const [dummy] = useState<ICard[]>([
     {
       id: 0,
@@ -126,16 +128,30 @@ const Board = () => {
     });
   };
 
+  const handleCardOnClick = (card: ICard) => {
+    if (isSelectedCard(selectedCards, card)) {
+      setSelectedCards(selectedCards.filter((item) => item.id !== card.id));
+    } else {
+      if (selectedCards.length >= 3) return;
+      setSelectedCards([...selectedCards, { ...card }]);
+    }
+  };
+
   useEffect(() => {
     console.log({ selectedList });
   }, [selectedList]);
 
   return (
     <Container className="board-container" onClick={onClickCard}>
-      {chunk(dummy, 3).map((row: ICard[]) => (
-        <BoardRow>
+      {chunk(dummy, 3).map((row: ICard[], index: number) => (
+        <BoardRow key={index}>
           {row.map((item) => (
-            <Card data={item} key={item.id} />
+            <Card
+              key={item.id}
+              data={item}
+              onClick={handleCardOnClick}
+              selectedCards={selectedCards}
+            />
           ))}
         </BoardRow>
       ))}
