@@ -1,10 +1,10 @@
 import { styled } from '@stitches/react';
 import { Col } from 'antd';
 
-import { ICard } from '../../types/board.type';
+import { ICard } from '@/types/board.type';
 
-import { iconPath } from '../../images/card/index';
-import { isSelectedCard } from '../../common/utils';
+import { iconPath } from '@/images/card/index';
+import { isSelectedCard } from '@/common/utils';
 
 const BoardCard = styled('div', {
   // flex: '1',

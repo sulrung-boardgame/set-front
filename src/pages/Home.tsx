@@ -1,8 +1,8 @@
 import { Layout, Avatar, Space, Typography } from 'antd';
-import theme from '../style/theme';
+import theme from '@/style/theme';
 import { UserOutlined } from '@ant-design/icons';
 
-import Board from './components/Board';
+import Board from '@/pages/components/Board';
 
 const { Header, Content } = Layout;
 const { Text } = Typography;
