@@ -1,6 +1,6 @@
-import _ from 'lodash';
+import findIndex from 'lodash/findIndex';
 import { ICard } from '../types/board.type';
 
 export const isSelectedCard = (list: ICard[], value: ICard) => {
-  return _.findIndex(list, value) !== -1;
+  return findIndex(list, value) !== -1;
 };

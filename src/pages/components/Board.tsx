@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Row } from 'antd';
 import { styled } from '@stitches/react';
-import { chunk } from 'lodash';
+import chunk from 'lodash/chunk';
 
 import theme from '../../style/theme';
 import { EnColor, EnPattern, EnShape, ICard } from '../../types/board.type';
