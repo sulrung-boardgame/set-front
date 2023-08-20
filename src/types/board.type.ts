@@ -1,23 +1,23 @@
 export enum EnColor {
-  Red = 'r',
-  Green = 'g',
-  Purple = 'p',
+  Red = 'red',
+  Green = 'green',
+  Purple = 'purple',
 }
 
 export enum EnShape {
-  Diamond = 'd',
-  Oval = 'o',
-  Zigzag = 'z',
+  Diamond = 'diamond',
+  Oval = 'oval',
+  Squiggle = 'squiggle',
 }
 
 export enum EnPattern {
-  Filled = 'f',
-  Stripted = 's',
-  Empty = 'e',
+  Solid = 'solid',
+  Stripted = 'striped',
+  Outlined = 'outlined',
 }
 
 export interface ICard {
-  id: number;
+  key: string;
   color: EnColor;
   shape: EnShape;
   pattern: EnPattern;

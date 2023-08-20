@@ -9,6 +9,8 @@ import { isSelectedCard } from '@/common/utils';
 const BoardCard = styled('div', {
   // flex: '1',
   textAlign: 'center',
+  flexBasis: '30%',
+  height: 'calc(100% / 4)',
 
   variants: {
     selected: {
@@ -20,6 +22,11 @@ const BoardCard = styled('div', {
       },
     },
   },
+  img: {
+    maxWidth: '100%',
+    maxHeight: '100%',
+    objectFit: 'cover',
+  },
 });
 
 interface IProps {
@@ -29,14 +36,15 @@ interface IProps {
 }
 
 const Card = ({ data, onClick, selectedCards }: IProps) => {
-  console.log(selectedCards);
   return (
     <BoardCard
       onClick={() => onClick(data)}
       selected={`${isSelectedCard(selectedCards, data)}`}
     >
       <img
-        src={iconPath(data.color + data.shape + data.pattern + data.count)}
+        src={iconPath(
+          `${data.color}_${data.shape}_${data.pattern}_${data.count}`
+        )}
       />
     </BoardCard>
   );
