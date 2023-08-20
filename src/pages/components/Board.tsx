@@ -1,13 +1,19 @@
 import { useEffect, useState } from 'react';
-import { Row } from 'antd';
 import { styled } from '@stitches/react';
-import chunk from 'lodash/chunk';
+import { difference, chunk } from 'lodash';
 
 import theme from '@/style/theme';
 import { EnColor, EnPattern, EnShape, ICard } from '@/types/board.type';
 
 import Card from './Card';
-import { isSelectedCard } from '@/common/utils';
+import {
+  isSelectedCard,
+  getDeck,
+  shuffle,
+  isSet,
+  isValidFeature,
+  anySet,
+} from '@/common/utils';
 
 const Container = styled('div', {
   background: theme.color.content,
@@ -15,122 +21,18 @@ const Container = styled('div', {
   gap: '0.25rem',
   height: '100%',
   minHeight: '1100px',
-});
-
-const BoardRow = styled(Row, {
-  gap: '0.25rem',
-  // height: 'calc(25% - 0.25rem)',
-  // marginBottom: '0.25rem',
+  display: 'flex',
+  flexWrap: 'wrap',
 });
 
 const Board = () => {
-  const [selectedList, setSelectedList] = useState<ICard[]>([]);
-  const [selectedCards, setSelectedCards] = useState<ICard[]>([]); // todo: store 에서 관리
-  const [dummy] = useState<ICard[]>([
-    {
-      id: 0,
-      color: EnColor.Red,
-      shape: EnShape.Diamond,
-      pattern: EnPattern.Empty,
-      count: 2,
-    },
-    {
-      id: 1,
-      color: EnColor.Purple,
-      shape: EnShape.Oval,
-      pattern: EnPattern.Stripted,
-      count: 2,
-    },
-    {
-      id: 2,
-      color: EnColor.Green,
-      shape: EnShape.Zigzag,
-      pattern: EnPattern.Filled,
-      count: 1,
-    },
-
-    {
-      id: 3,
-      color: EnColor.Red,
-      shape: EnShape.Zigzag,
-      pattern: EnPattern.Stripted,
-      count: 1,
-    },
-    {
-      id: 4,
-      color: EnColor.Green,
-      shape: EnShape.Oval,
-      pattern: EnPattern.Stripted,
-      count: 2,
-    },
-    {
-      id: 5,
-      color: EnColor.Green,
-      shape: EnShape.Diamond,
-      pattern: EnPattern.Empty,
-      count: 1,
-    },
-    {
-      id: 6,
-      color: EnColor.Purple,
-      shape: EnShape.Diamond,
-      pattern: EnPattern.Filled,
-      count: 1,
-    },
-    {
-      id: 7,
-      color: EnColor.Red,
-      shape: EnShape.Oval,
-      pattern: EnPattern.Filled,
-      count: 2,
-    },
-    {
-      id: 8,
-      color: EnColor.Purple,
-      shape: EnShape.Oval,
-      pattern: EnPattern.Empty,
-      count: 2,
-    },
-    {
-      id: 9,
-      color: EnColor.Green,
-      shape: EnShape.Zigzag,
-      pattern: EnPattern.Stripted,
-      count: 3,
-    },
-    {
-      id: 10,
-      color: EnColor.Purple,
-      shape: EnShape.Zigzag,
-      pattern: EnPattern.Empty,
-      count: 1,
-    },
-    {
-      id: 11,
-      color: EnColor.Green,
-      shape: EnShape.Diamond,
-      pattern: EnPattern.Filled,
-      count: 2,
-    },
-  ]);
-
-  const onClickCard = (event: React.MouseEvent<HTMLDivElement>) => {
-    const target = event.target as HTMLDivElement;
-    setSelectedList((list) => {
-      if (list.includes(target.innerText)) {
-        return list.filter((item) => item !== target.textContent);
-      }
-      const textContent = target.innerText.trim();
-      if (textContent) {
-        return [...list, textContent];
-      }
-      return list;
-    });
-  };
+  const [deck, setDeck] = useState<ICard[]>([]);
+  const [opened, setOpened] = useState<ICard[]>([]);
+  const [selectedCards, setSelectedCards] = useState<ICard[]>([]);
 
   const handleCardOnClick = (card: ICard) => {
     if (isSelectedCard(selectedCards, card)) {
-      setSelectedCards(selectedCards.filter((item) => item.id !== card.id));
+      setSelectedCards(selectedCards.filter((item) => item.key !== card.key));
     } else {
       if (selectedCards.length >= 3) return;
       setSelectedCards([...selectedCards, { ...card }]);
@@ -138,22 +40,54 @@ const Board = () => {
   };
 
   useEffect(() => {
-    console.log({ selectedList });
-  }, [selectedList]);
+    setDeck(getDeck());
+  }, []);
+
+  useEffect(() => {
+    let newList = deck.splice(0, 12);
+    let count = 0;
+    while (!anySet(newList) && count < 10) {
+      setDeck((deck) => [...shuffle(deck)]);
+      newList = deck.splice(0, 12);
+      count++;
+      console.log({ count });
+    }
+    setOpened(newList);
+  }, [deck]);
+
+  useEffect(() => {
+    console.log({ opened });
+  }, [opened]);
+
+  useEffect(() => {
+    if (selectedCards.length === 3) {
+      // claim
+
+      if (isSet(selectedCards)) {
+        alert('set');
+        // setOpened((opened) => difference(opened, selectedCards));
+        console.log({
+          opened,
+          selectedCards,
+          result: difference(opened, selectedCards),
+        });
+        setSelectedCards([]);
+      } else {
+        alert('not set');
+        setSelectedCards([]);
+      }
+    }
+  }, [selectedCards, opened]);
 
   return (
-    <Container className="board-container" onClick={onClickCard}>
-      {chunk(dummy, 3).map((row: ICard[], index: number) => (
-        <BoardRow key={index}>
-          {row.map((item) => (
-            <Card
-              key={item.id}
-              data={item}
-              onClick={handleCardOnClick}
-              selectedCards={selectedCards}
-            />
-          ))}
-        </BoardRow>
+    <Container className="board-container">
+      {opened.map((openedCard: ICard, index: number) => (
+        <Card
+          key={index}
+          data={openedCard}
+          onClick={handleCardOnClick}
+          selectedCards={selectedCards}
+        />
       ))}
     </Container>
   );
